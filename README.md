@@ -68,7 +68,7 @@ Now this interest rules are used when calculating interest for the monthly state
 
 ### Get Account Statements
 
-Assuming that we dont add intersts to previous months balance, system will do the following steps to figure out interest record for the monthly statement.
+Assuming that we don't add interests to previous months balance, system will do the following steps to figure out interest record for the monthly statement.
 
 - When the year and month is input by user, system will first check the total balance up until the begining of the input month
 
