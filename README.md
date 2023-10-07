@@ -2,7 +2,7 @@
 
 ## Local environment setup
 
-Before everything please clone the project and install node JS in your local coumputer. Version used here is,
+Before everything please clone the project and install node JS in your local computer. Version used here is,
 
 ### `v18.17.0`
 
@@ -22,6 +22,20 @@ Now run the application
 
 ```
 npm run dev
+```
+
+## Testing
+
+Please run the following command to test the application
+
+```
+npm run test
+```
+
+To run with coverage
+
+```
+npm run test --coverage
 ```
 
 ## Production run
