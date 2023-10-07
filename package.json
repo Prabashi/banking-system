@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node src/app.ts",
+    "dev": "npx ts-node src/app.ts",
     "test": "npx jest",
     "test:coverage": "jest --coverage",
     "build": "tsc",
-    "production": "tsc && node dist/app.js"
+    "production": "npm run build && node dist/app.js"
   },
   "keywords": [],
   "author": "",
