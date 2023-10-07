@@ -3,6 +3,7 @@ import {
   INVALID_DATE_FORMAT_ERR,
   INVALID_TRANSACTION_TYPE_ERR,
 } from "../constants/errorMessages";
+import { TRANSACTION_TYPES } from "../constants/appConstants";
 import {
   numberToStringWithPadding,
   isValidDate,
@@ -46,7 +47,10 @@ export class Transaction {
   }
 
   private isValidTransactionType(type: string): boolean {
-    return type === "D" || type === "W";
+    return (
+      type === TRANSACTION_TYPES.DEPOSIT ||
+      type === TRANSACTION_TYPES.WITHDRAWAL
+    );
   }
 
   public get type(): string {

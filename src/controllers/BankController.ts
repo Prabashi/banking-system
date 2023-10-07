@@ -18,6 +18,7 @@ import {
   NO_ACCOUNT_ERR,
   MORE_THAN_ONE_RULE_ERR,
 } from "../constants/errorMessages";
+import { MONTH_START_DATE, INTEREST_TYPE } from "../constants/appConstants";
 import {
   calculateInterest,
   getDistinctDates,
@@ -144,7 +145,9 @@ export class BankController {
     }
 
     const userIputDateMonthEnd: Date = getLastDayOfMonth(dateString);
-    const userInputMonthBegining: Date = getDateFromString(dateString + "01");
+    const userInputMonthBegining: Date = getDateFromString(
+      dateString + MONTH_START_DATE
+    );
     const allTransactions = this.getAccount(accountName)?.transactions;
     let balance = 0;
 
@@ -190,7 +193,7 @@ export class BankController {
     statement.push([
       getStringFromDate(userIputDateMonthEnd),
       "           ",
-      "I",
+      INTEREST_TYPE,
       interestTotal.toString(),
       balance.toString(),
     ]);

@@ -4,6 +4,7 @@ import {
 } from "../constants/errorMessages";
 import { getDateFromString } from "../utils/utils";
 import { ITransaction, Transaction } from "./Transaction";
+import { TRANSACTION_TYPES } from "../constants/appConstants";
 
 export interface IAccount {
   name: string;
@@ -16,7 +17,7 @@ export class Account {
 
   constructor(name: string, transaction: Transaction) {
     // Check for the first transaction on the account and ensure it's a deposit
-    if (transaction.type !== "D") {
+    if (transaction.type !== TRANSACTION_TYPES.DEPOSIT) {
       throw new Error(INVALID_FIRST_TRANSACTION_ERR);
     }
 
@@ -35,7 +36,7 @@ export class Account {
   public addTransaction(transaction: Transaction): void {
     // Calculate the new balance
     const balance = this.transactions.reduce((acc, t) => {
-      if (t.type === "D") {
+      if (t.type === TRANSACTION_TYPES.DEPOSIT) {
         return acc + t.amount;
       } else {
         return acc - t.amount;
@@ -43,7 +44,10 @@ export class Account {
     }, 0);
 
     // Ensure the balance doesn't go below 0
-    if (transaction.type === "W" && balance - transaction.amount < 0) {
+    if (
+      transaction.type === TRANSACTION_TYPES.WITHDRAWAL &&
+      balance - transaction.amount < 0
+    ) {
       throw new Error(TRANSACTION_WITHDRAWAL_ERR);
     }
 
