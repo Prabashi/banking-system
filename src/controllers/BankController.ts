@@ -140,6 +140,12 @@ export class BankController {
   };
 
   public getAccountStatement(accountName: string, dateString: string): string {
+    const account = this.getAccount(accountName);
+
+    if (!account) {
+      throw new Error(NO_ACCOUNT_ERR);
+    }
+
     if (!isValidMonth(dateString)) {
       throw new Error(INVALID_MONTH_FORMAT_ERR);
     }
@@ -148,7 +154,7 @@ export class BankController {
     const userInputMonthBegining: Date = getDateFromString(
       dateString + MONTH_START_DATE
     );
-    const allTransactions = this.getAccount(accountName)?.transactions;
+    const allTransactions = account.transactions;
     let balance = 0;
 
     allTransactions?.forEach((transaction: Transaction) => {

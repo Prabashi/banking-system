@@ -62,7 +62,7 @@ describe("getTransactionOverview", () => {
 
   it("should throw an error for invalid account", () => {
     expect(() => bankController.getTransactionOverview("A00")).toThrowError(
-      "No account found."
+      "Account not found."
     );
   });
   it("should return transaction overview for a valid account", () => {
@@ -126,7 +126,15 @@ describe("getAccountStatement", () => {
     bankController["_interestRules"] = [];
   });
 
+  it("should throw an error if account not found", () => {
+    expect(() =>
+      bankController.getAccountStatement("AC001", "202306")
+    ).toThrowError("Account not found.");
+  });
+
   it("should throw an error for invalid month", () => {
+    bankController.addAccountTransaction("AC001", "20230505", "D", "100.00");
+
     expect(() =>
       bankController.getAccountStatement("AC001", "20230")
     ).toThrowError("Invalid date format");

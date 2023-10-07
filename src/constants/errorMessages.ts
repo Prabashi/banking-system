@@ -9,7 +9,7 @@ export const INVALID_INTEREST_RATE_ERR =
   "Invalid rate. Rate should be between 0 and 100.";
 export const INVALID_MONTH_FORMAT_ERR =
   "Invalid date format / value. Date should be in YYYYMM format.";
-export const NO_ACCOUNT_ERR = "No account found.";
+export const NO_ACCOUNT_ERR = "Account not found.";
 export const MORE_THAN_ONE_RULE_ERR =
   "More than one rule exists for the same date.";
 export const TRANSACTION_WITHDRAWAL_ERR =
