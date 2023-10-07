@@ -35,7 +35,7 @@ npm run test
 To run with coverage
 
 ```
-npm run test --coverage
+npm run test:coverage
 ```
 
 ## Production run
