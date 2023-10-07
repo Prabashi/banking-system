@@ -1,6 +1,4 @@
 import { BankController } from "../BankController";
-import { Account } from "../../models/Account";
-import { Transaction } from "../../models/Transaction";
 import { InterestRule } from "../../models/InterestRule";
 
 describe("addAccountTransaction", () => {
@@ -15,27 +13,15 @@ describe("addAccountTransaction", () => {
 
     const account = bankController.getAccount("AC001");
     expect(account).toBeDefined();
-    // expect(account).toBeInstanceOf(Account);
     expect(account?.transactions.length).toBe(1);
-    // expect(account?.transactions[0]).toBeInstanceOf(Transaction);
   });
 
   it("should add a transaction to an existing account", () => {
-    // const existingTransactionAmount = 100.0;
-
-    // // Create an existing account with a transaction
-    // const existingAccount = new Account(
-    //   "AC001",
-    //   new Transaction("20230601", "D", existingTransactionAmount)
-    // );
-    // bankController["_accounts"].push(existingAccount);
-
     // Add a new transaction to the existing account
     bankController.addAccountTransaction("AC001", "20230626", "W", "20.00");
 
     const account = bankController.getAccount("AC001");
     expect(account?.transactions.length).toBe(2);
-    // expect(account?.transactions[1]).toBeInstanceOf(Transaction);
   });
 });
 
