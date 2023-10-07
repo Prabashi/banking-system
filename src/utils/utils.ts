@@ -36,7 +36,7 @@ export const getReport = (
     report.push(row.join(" | "));
   });
 
-  return report.join("\n");
+  return `\n${report.join("\n")}\n`;
 };
 
 // Check if the input is in YYYYMMDD format
