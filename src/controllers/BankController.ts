@@ -157,25 +157,26 @@ export class BankController {
     const allTransactions = account.transactions;
     let balance = 0;
 
+    // Get the balance at the beginning of the month
     allTransactions?.forEach((transaction: Transaction) => {
-      const allTransactionDate: Date = getDateFromString(transaction.date);
-      if (userInputMonthBegining > allTransactionDate) {
+      const transactionDate: Date = getDateFromString(transaction.date);
+      if (userInputMonthBegining > transactionDate) {
         balance = handleBalance(transaction.type, balance, transaction.amount);
       }
     });
 
     const transactionsForMonth =
-      this.getAccount(accountName)?.getTransactionsForMonth(
-        userIputDateMonthEnd
-      ) || [];
-    const iteratingArr = getDistinctDates(
+      account.getTransactionsForMonth(userIputDateMonthEnd) || [];
+
+    // Get a list of dates to calculate interest for different date periods
+    const eventDates = getDistinctDates(
       transactionsForMonth,
       this._interestRules,
       userIputDateMonthEnd,
       userInputMonthBegining
     );
     const interestTotal = calculateInterest(
-      iteratingArr,
+      eventDates,
       balance,
       transactionsForMonth,
       this._interestRules
@@ -183,6 +184,7 @@ export class BankController {
 
     const statement: string[][] = [];
 
+    // Create the list of transactions for the statement
     transactionsForMonth?.forEach((transaction: Transaction) => {
       balance = handleBalance(transaction.type, balance, transaction.amount);
       statement.push([
@@ -196,6 +198,7 @@ export class BankController {
 
     balance = balance + interestTotal;
 
+    // Add the interest to the statement at the end of month
     statement.push([
       getStringFromDate(userIputDateMonthEnd),
       "           ",
