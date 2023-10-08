@@ -102,6 +102,9 @@ describe("getInterestRuleOverview", () => {
     expect(interestRuleOverview).toContain("20230101");
     expect(interestRuleOverview).toContain("20230520");
     expect(interestRuleOverview).toContain("20230615");
+    expect(interestRuleOverview.indexOf("20230520")).toBeLessThan(
+      interestRuleOverview.indexOf("20230615")
+    );
   });
 
   it("should throw an error if there are more than one rule for the same date", () => {
