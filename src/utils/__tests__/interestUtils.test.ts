@@ -57,7 +57,7 @@ describe("getBalanceForDay", () => {
 });
 
 describe("getMatchedRuleForDay", () => {
-  it("should calculate balance correctly", () => {
+  it("should return the matching rule for the day", () => {
     const date = new Date("2023-07-01");
     const interestRules = [
       new InterestRule("20230101", "RULE01", 1.95),
@@ -71,7 +71,7 @@ describe("getMatchedRuleForDay", () => {
 });
 
 describe("getDistinctDates", () => {
-  it("should calculate balance correctly", () => {
+  it("should return a list of distinct dates different events occurred", () => {
     const transactions = [
       new Transaction("20230601", "D", "150.00", 1),
       new Transaction("20230626", "W", "20.00", 1),
@@ -102,10 +102,10 @@ describe("getDistinctDates", () => {
 });
 
 describe("handleBalance", () => {
-  it("should calculate balance correctly", () => {
+  it("should calculate balance correctly for a given type", () => {
     const balance = 100;
     const amount = 150;
-    const newBalance = handleBalance('D', balance, amount);
+    const newBalance = handleBalance("D", balance, amount);
     expect(newBalance).toBe(250);
   });
 });
