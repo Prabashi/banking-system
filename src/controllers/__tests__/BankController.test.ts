@@ -140,7 +140,7 @@ describe("getAccountStatement", () => {
     ).toThrowError("Invalid date format");
   });
 
-  it("should print statement", () => {
+  it("should print statement with correct interest for a month with multiple transactions and rules", () => {
     bankController.defineInterestRule("20230101", "RULE01", "1.95");
     bankController.defineInterestRule("20230520", "RULE02", "1.90");
     bankController.defineInterestRule("20230615", "RULE03", "2.20");
@@ -154,7 +154,7 @@ describe("getAccountStatement", () => {
     );
   });
 
-  it("should print statement", () => {
+  it("should print statement with correct interest for a month with only previous transactions", () => {
     bankController.defineInterestRule("20230101", "RULE01", "1.95");
     bankController.defineInterestRule("20230520", "RULE02", "1.90");
     bankController.defineInterestRule("20230615", "RULE03", "2.20");
@@ -165,6 +165,20 @@ describe("getAccountStatement", () => {
     console.log(bankController.getAccountStatement("AC001", "202307"));
     expect(bankController.getAccountStatement("AC001", "202307")).toContain(
       "0.24"
+    );
+  });
+
+  it("should print statement with correct interest for a month with only one transaction and multiple rules", () => {
+    bankController.defineInterestRule("20230101", "RULE01", "1.95");
+    bankController.defineInterestRule("20230520", "RULE02", "1.90");
+    bankController.defineInterestRule("20230615", "RULE03", "2.20");
+    bankController.addAccountTransaction("AC001", "20230505", "D", "100.00");
+    bankController.addAccountTransaction("AC001", "20230601", "D", "150.00");
+    bankController.addAccountTransaction("AC001", "20230626", "W", "20.00");
+    bankController.addAccountTransaction("AC001", "20230626", "W", "100.00");
+    console.log(bankController.getAccountStatement("AC001", "202305"));
+    expect(bankController.getAccountStatement("AC001", "202305")).toContain(
+      "0.14"
     );
   });
 });
