@@ -1,10 +1,6 @@
 export default {
   preset: "ts-jest",
   testEnvironment: "node",
-  coveragePathIgnorePatterns: [
-    "node_modules",
-    "dist",
-    "src/controllers/AppController",
-  ],
+  coveragePathIgnorePatterns: ["node_modules", "dist"],
   testMatch: ["**/?(*.)+(spec|test).ts"],
 };
