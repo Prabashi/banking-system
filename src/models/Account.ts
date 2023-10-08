@@ -3,19 +3,15 @@ import {
   TRANSACTION_WITHDRAWAL_ERR,
 } from "../constants/errorMessages";
 import { getDateFromString } from "../utils/utils";
-import { ITransaction, Transaction } from "./Transaction";
 import { TRANSACTION_TYPES } from "../constants/appConstants";
+import { IAccount } from "./interfaces/Account.interface";
+import { ITransaction } from "./interfaces/Transaction.interface";
 
-export interface IAccount {
-  name: string;
-  transactions: ITransaction[];
-}
-
-export class Account {
+export class Account implements IAccount {
   private _name: string;
-  private _transactions: Transaction[];
+  private _transactions: ITransaction[];
 
-  constructor(name: string, transaction: Transaction) {
+  constructor(name: string, transaction: ITransaction) {
     // Check for the first transaction on the account and ensure it's a deposit
     if (transaction.type !== TRANSACTION_TYPES.DEPOSIT) {
       throw new Error(INVALID_FIRST_TRANSACTION_ERR);
@@ -29,11 +25,11 @@ export class Account {
     return this._name;
   }
 
-  public get transactions(): Transaction[] {
+  public get transactions(): ITransaction[] {
     return this._transactions;
   }
 
-  public addTransaction(transaction: Transaction): void {
+  public addTransaction(transaction: ITransaction): void {
     // Calculate the new balance
     const balance = this.transactions.reduce((acc, t) => {
       if (t.type === TRANSACTION_TYPES.DEPOSIT) {
@@ -54,7 +50,7 @@ export class Account {
     this.transactions.push(transaction);
   }
 
-  public getTransactionsForMonth(inputDate: Date): Transaction[] {
+  public getTransactionsForMonth(inputDate: Date): ITransaction[] {
     return this._transactions.filter((transaction) => {
       const transactionDate = getDateFromString(transaction.date);
       return (

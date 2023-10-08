@@ -9,14 +9,9 @@ import {
   isValidDate,
   isValidAmount,
 } from "../utils/utils";
-export interface ITransaction {
-  date: string;
-  type: string;
-  amount: number;
-  uniqueId: string;
-}
+import { ITransaction } from "./interfaces/Transaction.interface";
 
-export class Transaction {
+export class Transaction implements ITransaction {
   private _date: string;
   private _type: string;
   private _amount: number;

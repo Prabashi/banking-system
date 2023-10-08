@@ -24,11 +24,14 @@ import {
   getDistinctDates,
   handleBalance,
 } from "../utils/interestUtils";
+import { IAccount } from "../models/interfaces/Account.interface";
+import { IInterestRule } from "../models/interfaces/InterestRule.interface";
+import { ITransaction } from "../models/interfaces/Transaction.interface";
 
 export class BankController {
   private static _instance: BankController;
-  private _accounts: Account[] = [];
-  private _interestRules: InterestRule[] = [];
+  private _accounts: IAccount[] = [];
+  private _interestRules: IInterestRule[] = [];
 
   private constructor() {
     this._accounts = [];
@@ -41,11 +44,11 @@ export class BankController {
     return BankController._instance;
   }
 
-  private addAccount(account: Account): void {
+  private addAccount(account: IAccount): void {
     this._accounts.push(account);
   }
 
-  public getAccount(accountName: string): Account | undefined {
+  public getAccount(accountName: string): IAccount | undefined {
     return this._accounts.find((account) => account.name === accountName);
   }
 
@@ -123,8 +126,8 @@ export class BankController {
   }
 
   private sortRulesByDate = (
-    firstRule: InterestRule,
-    secondRule: InterestRule
+    firstRule: IInterestRule,
+    secondRule: IInterestRule
   ) => {
     const dateFirstRule = firstRule.date;
     const dateSecondRule = secondRule.date;
@@ -158,7 +161,7 @@ export class BankController {
     let balance = 0;
 
     // Get the balance at the beginning of the month
-    allTransactions?.forEach((transaction: Transaction) => {
+    allTransactions?.forEach((transaction: ITransaction) => {
       const transactionDate: Date = getDateFromString(transaction.date);
       if (userInputMonthBegining > transactionDate) {
         balance = handleBalance(transaction.type, balance, transaction.amount);
@@ -185,7 +188,7 @@ export class BankController {
     const statement: string[][] = [];
 
     // Create the list of transactions for the statement
-    transactionsForMonth?.forEach((transaction: Transaction) => {
+    transactionsForMonth?.forEach((transaction: ITransaction) => {
       balance = handleBalance(transaction.type, balance, transaction.amount);
       statement.push([
         transaction.date,

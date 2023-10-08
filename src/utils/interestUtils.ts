@@ -2,13 +2,15 @@ import { InterestRule } from "../models/InterestRule";
 import { Transaction } from "../models/Transaction";
 import { getDateFromString, roundToDecimalPlaces } from "./utils";
 import { TRANSACTION_TYPES } from "../constants/appConstants";
+import { ITransaction } from "../models/interfaces/Transaction.interface";
+import { IInterestRule } from "../models/interfaces/InterestRule.interface";
 
 // Calculate total interest for a month
 export const calculateInterest = (
   eventDates: Date[],
   balance: number,
-  transactions: Transaction[],
-  interestRules: InterestRule[]
+  transactions: ITransaction[],
+  interestRules: IInterestRule[]
 ): number => {
   let interest = 0;
   const oneDayTS = 24 * 60 * 60 * 1000;
@@ -43,10 +45,10 @@ export const calculateInterest = (
 export const getBalanceForDay = (
   date: Date,
   balance: number,
-  transactions: Transaction[] | undefined
+  transactions: ITransaction[] | undefined
 ): number => {
   let dayBalance = balance;
-  transactions?.forEach((transaction: Transaction) => {
+  transactions?.forEach((transaction: ITransaction) => {
     const transactionDate: Date = getDateFromString(transaction.date);
     if (date >= transactionDate) {
       dayBalance = handleBalance(
@@ -63,10 +65,10 @@ export const getBalanceForDay = (
 // Get the matching interest rule for a given day
 export const getMatchedRuleForDay = (
   date: Date,
-  interestRules: InterestRule[] | undefined
+  interestRules: IInterestRule[] | undefined
 ): InterestRule | undefined => {
   let matchedRule = undefined;
-  interestRules?.forEach((interestRule: InterestRule) => {
+  interestRules?.forEach((interestRule: IInterestRule) => {
     const ruleDate: Date = getDateFromString(interestRule.date);
 
     if (ruleDate < date) {
@@ -79,8 +81,8 @@ export const getMatchedRuleForDay = (
 
 // Get a list of dates where either a transaction is created or an interest rule is added
 export const getDistinctDates = (
-  transactions: Transaction[],
-  interestRules: InterestRule[],
+  transactions: ITransaction[],
+  interestRules: IInterestRule[],
   monthEnd: Date,
   monthStart: Date
 ): Date[] => {
@@ -88,7 +90,7 @@ export const getDistinctDates = (
 
   const interestRulesChangesMonth = interestRules
     .filter(
-      (interestRule: InterestRule) =>
+      (interestRule: IInterestRule) =>
         getDateFromString(interestRule.date) < monthEnd &&
         getDateFromString(interestRule.date) >= monthStart
     )

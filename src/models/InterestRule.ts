@@ -3,14 +3,9 @@ import {
   INVALID_INTEREST_RATE_ERR,
 } from "../constants/errorMessages";
 import { isValidDate, isValidRate } from "../utils/utils";
+import { IInterestRule } from "./interfaces/InterestRule.interface";
 
-export interface IInterestRule {
-  date: string;
-  ruleId: string;
-  rate: number;
-}
-
-export class InterestRule {
+export class InterestRule implements IInterestRule {
   private _date: string;
   private _ruleId: string;
   private _rate: number;
